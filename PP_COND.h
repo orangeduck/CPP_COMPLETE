@@ -2,8 +2,6 @@
 #define PP_COND_H
 
 #include "PP_CORE.h"
-#include "PP_BOOL.h"
-#include "PP_INT.h"
 
 #define PP_IF_ELSE(C, T, E) PP_JOIN(PP_IF_ELSE_, C)(T, E)
 #define PP_IF_ELSE_0(T, E) E
