@@ -1,3 +1,0 @@
-#include "PP_BRAINFUCK.h"
-
-PP_BRAINFUCK(STDIN)

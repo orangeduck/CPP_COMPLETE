@@ -1,5 +1,5 @@
 
-PP_BRAINFUCK
+BRAINFUCK
 ============
 
 BrainFuck written in the C preprocessor
@@ -28,7 +28,7 @@ For now, square brackets are also unmatched but this is certainly possible to ad
 
 Then a program can be compiled as so:
 
-* `cpp MAIN.h -D STDIN=(U,U,F,R,U,U,L,D,B,R,O)`
+* `cpp MAIN_BF.h -D STDIN=(U,U,F,R,U,U,L,D,B,R,O)`
 
 Wait for about 15 minutes. Then it should output the result:
 

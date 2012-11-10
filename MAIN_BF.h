@@ -1,3 +1,3 @@
 #include "COMPLETE.h"
 
-TURING(T, Q)
+BRAINFUCK(STDIN)
