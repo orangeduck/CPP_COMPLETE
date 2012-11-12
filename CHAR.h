@@ -1,6 +1,7 @@
 #ifndef CHAR_H
 #define CHAR_H
 
+/* Map INT to CHAR */
 #define CHAR(X) JOIN(CHAR_, X)
 #define CHAR_0   '\0'
 #define CHAR_1   '\0x01'

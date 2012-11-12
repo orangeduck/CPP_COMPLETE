@@ -1,8 +1,9 @@
 #ifndef DEC_H
 #define DEC_H
 
-#define DEC(X) JOIN(DEC_, X)
+/* Decrement an INT */
 
+#define DEC(X) JOIN(DEC_, X)
 #define DEC_0 0
 #define DEC_1 0
 #define DEC_2 1

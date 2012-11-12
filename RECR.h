@@ -5,24 +5,64 @@
 #include "COND.h"
 
 /*!
- * Recursion Example
- * =================
+ *  Recursion
+ *  =========
  *
- * #define RCOND($, X) BOOL(X)
- * #define RMACRO($, X) X
- * #define RUPDATE($, X) SUB($, X, 2)
- * #define RFINALLY($, X) DONE
+ *  This is the core recursion primative I use in the system.
+ *  
+ *  How To Use
+ *  ----------
  *
- * #define RTEST($, X) JOIN(RECR_D, $)(INC($), RCOND, RMACRO, RUPDATE, RFINALLY, X)
+ *  It must be setup as shown in the following:
+ *  
+ *  ```
+ *  // Condition upon which to continue recursion
+ *  #define RCOND($, X) BOOL(X)
  *
- * RTEST($, 10) => 10 8 6 4 2 
- * 
+ *  // Side effect to perform each iteration
+ *  #define RMACRO($, X) X
+ *
+ *  // Update function for variable
+ *  #define RUPDATE($, X) SUB($, X, 2)
+ *
+ *  // Function to perform after recursion termination
+ *  #define RFINALLY($, X) DONE
+ *
+ *  // Actual recursive function made up of above components
+ *  #define RTEST($, X) JOIN(RECR_D, $)(INC($), RCOND, RMACRO, RUPDATE, RFINALLY, X)
+ *
+ *  // Evaluation of above recursive function
+ *  RTEST($, 10) => 10 8 6 4 2 
+ *  ``` 
+ *  
+ *  Dollar
+ *  ------
+ *  
+ *  The dollar variable ($) is used to represent the recursion
+ *  depth. To avoid the preprocessor blocking recursion we must
+ *  always call a recursive function at a deeper depth which
+ *  means to properly build recursive functions that reuseable
+ *  we must always pass in the recursion depth
+ *
+ *
  */
  
+/* The Starting Recursion Depth */
 #define $0 0
 
+/*
+  Based on the condtional either
+  increments the recursion depth
+  or "kicks" it, creating an undefined symbol
+  symbol and terminating the recursion
+*/
 #define KICK(C, $) IF_ELSE(C, INC($), KICKED)
 
+/*
+  Recursion must "bounce" off this intermediate function.
+  This allows for the recursion depth to be incremented 
+  properly and the correct function selected next.
+*/
 #define RECR_D0($, C, M, U, E, X)   JOIN(RECR_A, $)(INC($), C, M, U, E, X)
 #define RECR_D1($, C, M, U, E, X)   JOIN(RECR_A, $)(INC($), C, M, U, E, X)
 #define RECR_D2($, C, M, U, E, X)   JOIN(RECR_A, $)(INC($), C, M, U, E, X)
@@ -1024,6 +1064,7 @@
 #define RECR_D998($, C, M, U, E, X) JOIN(RECR_A, $)(INC($), C, M, U, E, X)
 #define RECR_D999($, C, M, U, E, X) JOIN(RECR_A, $)(INC($), C, M, U, E, X)
 
+/* The template for a step of a recursive function */
 #define RECR_A0($, C, M, U, E, X)   IF_ELSE( C($, X), M($, X) JOIN(RECR_D, $)(KICK(C($, X), $), C, M, U, E, U($, X)), E($, X) )
 #define RECR_A1($, C, M, U, E, X)   IF_ELSE( C($, X), M($, X) JOIN(RECR_D, $)(KICK(C($, X), $), C, M, U, E, U($, X)), E($, X) )
 #define RECR_A2($, C, M, U, E, X)   IF_ELSE( C($, X), M($, X) JOIN(RECR_D, $)(KICK(C($, X), $), C, M, U, E, U($, X)), E($, X) )

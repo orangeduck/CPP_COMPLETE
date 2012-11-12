@@ -2,40 +2,16 @@
 #define BRAINFUCK_H
 
 /*!
- *  BRAINFUCK
- *  ============
- *
- *  About
- *  -----
- *
- *  Brainfuck in c preprocessor
- *  
- *
- *  Input
- *  -----
- *
- *  To ensure valid preprocessor symbols
- *  instructions are mapped to the following
- *  characters, with input disabled.
- *
- *  + `>` => `R`
- *  + `<` => `L`
- *  + `+` => `U`
- *  + `-` => `D`
- *  + `.` => `O`
- *  + `[` => `F`
- *  + `]` => `B`
- *
- *
  *  Structure
  *  ---------
  *
- *  IP - Brainfuck instr index
- *  DP - Brainfuck data  index
- *  IA - Brainfuck instr array
+ *  IP - Brainfuck instruction pointer
+ *  DP - Brainfuck data pointer
+ *
+ *  IA - Brainfuck instruction array
  *  DA - Brainfuck data  array
  *
- *  X - (IP, DP, IA, DA)
+ *  X - (IP, DP, IA, DA) - Brainfuck State
  *
  */
 
@@ -119,7 +95,7 @@
 #define BF_JUMP_F($, X) IF_ELSE(NOT(BOOL(BF_DATA($, X))), BF_JUMP_FWD($, X), INC(BF_IP(X)) )
 #define BF_JUMP_B($, X) IF_ELSE(BOOL(BF_DATA($, X)), BF_JUMP_BCK($, X) , INC(BF_IP(X)) )
 
-/* Brainfuck Symbol Update */
+/* Brainfuck Update based on Symbol */
 #define BF_UPDATE_SYM($, S, X) JOIN(BF_UPDATE_SYM_, S)($, X)
 #define BF_UPDATE_SYM_R($, X) (INC(BF_IP(X)), INC(BF_DP(X)), BF_IA(X), BF_DA(X))
 #define BF_UPDATE_SYM_L($, X) (INC(BF_IP(X)), DEC(BF_DP(X)), BF_IA(X), BF_DA(X))
@@ -130,13 +106,14 @@
 #define BF_UPDATE_SYM_B($, X) (BF_JUMP_B($, X),  BF_DP(X), BF_IA(X), BF_DA(X))
 #define BF_UPDATE_SYM_($, X) X
 
-
+/* Main Brainfuck loop */
 #define BF_COND($, X) NOT(BF_IS_BLANK(BF_INSTR($, X)))
 #define BF_MACRO($, X) IF(BF_IS_OUTPUT(BF_INSTR($, X)), CHAR(BF_DATA($, X)))
 #define BF_UPDATE($, X) BF_UPDATE_SYM($, BF_INSTR($, X), X)
 #define BF_FINALLY($, X) 
 #define BF_RECR($, X) JOIN(RECR_D, $)(INC($), BF_COND, BF_MACRO, BF_UPDATE, BF_FINALLY, X)
 
+/* Extend to get more data cells */
 #define BF_DATA_EMPTY() (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
 
 /* Perform Brainfuck with input I */

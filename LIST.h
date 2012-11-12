@@ -5,6 +5,8 @@
 #include "BOOL.h"
 #include "RECR.h"
 
+/* Primative list data structure */
+
 #define LIST(...) (__VA_ARGS__)
 #define UNCURRY(M, ...) M(__VA_ARGS__)
 #define CURRY(M, L) EVAL(M L)
