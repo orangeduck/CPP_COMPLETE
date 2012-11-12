@@ -37,7 +37,7 @@
 #define CHAR_31  '\0x1F'
 #define CHAR_32  ' '
 #define CHAR_33  '!'
-#define CHAR_34  '\0x22'
+#define CHAR_34  '"'
 #define CHAR_35  '#'
 #define CHAR_36  '$'
 #define CHAR_37  '%'
