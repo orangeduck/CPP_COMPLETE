@@ -33,7 +33,7 @@
 
 #define TAKE_C($, X) BOOL(SND(X))
 #define TAKE_M($, X) 
-#define TAKE_U($, X) (FST(X), DEC(SND(X)), CONS(HEAD(FST(X)), TRD(X)))
+#define TAKE_U($, X) (TAIL(FST(X)), DEC(SND(X)), CONCAT(TRD(X), (HEAD(FST(X)))))
 #define TAKE_E($, X) TRD(X)
 #define TAKE($, L, N) JOIN(RECR_D, $)(INC($), TAKE_C, TAKE_M, TAKE_U, TAKE_E, (L, N, ()))
 

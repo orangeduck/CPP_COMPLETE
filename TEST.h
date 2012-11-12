@@ -145,6 +145,18 @@ BF_UPDATE($0, (0, 1, (O,U,U,O,D), (0,0,0)) ) // Output
 BF_UPDATE($0, (0, 1, (U,U,U,O,D), (5,1,7)) ) // Up
 BF_UPDATE($0, (0, 1, (D,U,U,O,D), (3,4,8)) ) // Down
 
+TAKE($0, (3,4,8), 0)
+TAKE($0, (3,4,8), 1)
+TAKE($0, (3,4,8), 2)
+TAKE($0, (3,4,8), 3)
+
+BF_DATA_FST($0, (0, 2, (D,U,U,O,D), (3,4,8)))
+BF_DATA_SND($0, (0, 2, (D,U,U,O,D), (3,4,8)))
+BF_DATA_DECED($0, (0, 2, (D,U,U,O,D), (3,4,8)))
+
+BF_DATA_DEC($0, (0, 2, (D,U,U,O,D), (3,4,8)) ) // Down
+BF_DATA_INC($0, (1, 2, (D,U,U,O,D), (3,4,8)) ) // Up
+
 BF_UPDATE($0, (0, 0, (F,U,U,B,D), (0,1,7)) ) // Forward
 BF_UPDATE($0, (0, 0, (F,D,B,U,U), (1,1,7)) ) // Forward
 BF_UPDATE($0, (3, 0, (F,U,U,B,D), (0,4,8)) ) // Back
@@ -156,14 +168,11 @@ BRAINFUCK( () )
 BRAINFUCK( (R,R,L) )
 BRAINFUCK( (O,O,R,O) )
 BRAINFUCK( (O,U,O,U,O) )
-
-//BRAINFUCK( (U,U,F,R,U,U,L,D,B,R,O) )
-//BRAINFUCK( (U,U,U,U,U,U,U,U,O,F,R,U,U,U,U,U,U,U,U,L,D,B,R,U,O) )
-//BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,R,U,U,U,U,U,U,U,U,U,U,R,U,U,U,R,U,L,L,L,L,D,B,R,U,U,O,R,U,O,U,U,U,U,U,U,U,O,U,U,U,O,R,U,U,O,L,L,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,O,R,O,U,U,U,O,D,D,D,D,D,D,O,D,D,D,D,D,D,D,D,O,R,U,O) )
+BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,U,U,L,D,B,R,O) )
+BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,R,U,U,U,U,L,L,D,B,R,U,O,R,O) )
+BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,R,U,U,U,U,U,U,U,U,U,U,R,U,U,U,R,U,L,L,L,L,D,B,R,U,U,O,R,U,O,U,U,U,U,U,U,U,O,O,U,U,U,O,R,U,U,O,L,L,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,O,R,O,U,U,U,O,D,D,D,D,D,D,O,D,D,D,D,D,D,D,D,O,R,U,O) )
 
 /* Turing Machine */
-
-/*
 
 #include "TURING.h"
 
@@ -184,41 +193,30 @@ TM_STATE_U($0, ((0,0,1,1,0,1), s0, 2))
 TM_STATE_U($0, ((0,0,1,1,0,1), s0, 3))
 TM_STATE_U($0, ((0,0,1,1,0,1), s0, 4))
 TM_STATE_U($0, ((0,0,1,1,0,1), s0, 5))
-TM_STATE_U($0, ((0,0,1,1,0,1), s0, 6))
-TM_STATE_U($0, ((0,0,1,1,0,1), s0, 7))
 
 TM_HEAD_U($0, ((0,0,1,1,0,1), s0, 1))
 TM_HEAD_U($0, ((0,0,1,1,0,1), s0, 2))
 TM_HEAD_U($0, ((0,0,1,1,0,1), s0, 3))
 TM_HEAD_U($0, ((0,0,1,1,0,1), s0, 4))
 TM_HEAD_U($0, ((0,0,1,1,0,1), s0, 5))
-TM_HEAD_U($0, ((0,0,1,1,0,1), s0, 6))
-TM_HEAD_U($0, ((0,0,1,1,0,1), s0, 7))
 
 TM_TAPE_U($0, ((0,0,1,1,0,1), s0, 1))
 TM_TAPE_U($0, ((0,0,1,1,0,1), s0, 2))
 TM_TAPE_U($0, ((0,0,1,1,0,1), s0, 3))
 TM_TAPE_U($0, ((0,0,1,1,0,1), s0, 4))
 TM_TAPE_U($0, ((0,0,1,1,0,1), s0, 5))
-//TM_TAPE_U($0, ((0,0,1,1,0,1), s0, 6))
-//TM_TAPE_U($0, ((0,0,1,1,0,1), s0, 7))
 
 TURING_RECR_U($0, ((0,0,1,1,0,1), s0, 2))
 TURING_RECR_U($0, ((0,0,1,1,0,1), s0, 3))
 TURING_RECR_U($0, ((0,0,1,1,0,1), s0, 4))
 TURING_RECR_U($0, ((0,0,1,1,0,1), s0, 5))
-//TURING_RECR_U($0, ((0,0,1,1,0,1), s0, 6))
-
-
 
 TM_TAPE_SET($0, (0,0,1,1,0,1), 0, 1)
 TM_TAPE_SET($0, (0,0,1,1,0,1), 1, 1)
 TM_TAPE_SET($0, (0,0,1,1,0,1), 2, 0)
 TM_TAPE_SET($0, (0,0,1,1,0,1), 3, 1)
 
-//TURING((), s0)
-//TURING((1), s0)
-//TURING((0,1), s0)
-//TURING((0,0,1,1,0,1), s0)
-
-*/
+TURING((), s0)
+TURING((1), s0)
+TURING((0,1), s0)
+TURING((0,0,1,1,0,1), s0)

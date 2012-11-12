@@ -4,13 +4,6 @@ BRAINFUCK
 
 BrainFuck written in the C preprocessor
 
-WARNING
--------
-
-This implementation of brainfuck is EXTREMELY slow and takes HUGE amounts of memory. The reason for this is that it does not do computation as we commonly think of it, but rather evaluates all possible computation paths to their termination. It then parses this computation tree and folds it into the actual computation path for the program. This forced evaluation includes the continuation of loops when their conditional fails. It unfolds these loops up to the maximum-recursion-depth.
-
-This means the execution speed grows exponentially (or more) with the size of the input. An input of around 10 characters can take half an hour to an hour. An input of any more will not compute as memory will be exceeded.
-
 Compiling
 ---------
 
@@ -24,13 +17,13 @@ As the standard bainfuck symbols are invalid preprocessor tokens they have been 
 * `[` => `F`
 * `]` => `B`
 
-For now, square brackets are also unmatched but this is certainly possible to add.
+For now, square brackets are also unmatched but this is an improvement I will make soon.
 
 Then a program can be compiled as so:
 
-* `cpp MAIN_BF.h -D STDIN=(U,U,F,R,U,U,L,D,B,R,O)`
+* `cpp MAIN_BF.h -D STDIN=(U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,R,U,U,U,U,U,U,U,U,U,U,R,U,U,U,R,U,L,L,L,L,D,B,R,U,U,O,R,U,O,U,U,U,U,U,U,U,O,O,U,U,U,O,R,U,U,O,L,L,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,O,R,O,U,U,U,O,D,D,D,D,D,D,O,D,D,D,D,D,D,D,D,O,R,U,O)`
 
-Wait for about 15 minutes. Then it should output the result:
+Wait for about 30 seconds then the result should appear.
 
-* `[EOT]`
+* `'H' 'e' 'l' 'l' 'o' ' ' 'W' 'o' 'r' 'l' 'd' '!'`
 
