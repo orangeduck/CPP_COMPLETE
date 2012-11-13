@@ -1,7 +1,7 @@
 #ifndef COMPLETE_H
 #define COMPLETE_H
 
-/* Include all headers */
+/*! Include all headers */
 
 #include "CORE.h"
 #include "COND.h"

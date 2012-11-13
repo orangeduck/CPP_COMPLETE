@@ -3,10 +3,12 @@
 
 #include "CORE.h"
 
-/* Conditional Expression */
-
-/*
- * !! Warning !!
+/*!
+ *
+ *  Condtional Expressions
+ *  ----------------------
+ *
+ *  !!! Warning !!!
  *
  *  Both sides of the conditional will
  *  be fully evaluated. The preprocessor

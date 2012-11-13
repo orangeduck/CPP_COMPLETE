@@ -1,7 +1,14 @@
 #ifndef CHAR_H
 #define CHAR_H
 
-/* Map INT to CHAR */
+/*!
+ *  Map Integer to Char
+ *
+ *  Symbols are surrounded in qotes
+ *  to ensure no interference with
+ *  macro expansion.
+ */
+ 
 #define CHAR(X) JOIN(CHAR_, X)
 #define CHAR_0   '\0'
 #define CHAR_1   '\0x01'
@@ -16,7 +23,7 @@
 #define CHAR_10  '\n'
 #define CHAR_11  '\v'
 #define CHAR_12  '\0x0C'
-#define CHAR_13  '\0x0D'
+#define CHAR_13  '\r'
 #define CHAR_14  '\0x0E'
 #define CHAR_15  '\0x0F'
 #define CHAR_16  '\0x10'

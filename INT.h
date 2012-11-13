@@ -1,6 +1,8 @@
 #ifndef INT_H
 #define INT_H
 
+/*! Integer Operations */
+
 #include "CORE.h"
 #include "INC.h"
 #include "DEC.h"
@@ -8,21 +10,21 @@
 #include "RECR.h"
 #include "LIST.h"
 
-/* Add two INTs */
+/*! Addition */
 #define ADD_C($, X) BOOL(SND(X))
 #define ADD_M($, X) 
 #define ADD_U($, X) (INC(FST(X)), DEC(SND(X)))
 #define ADD_E($, X) FST(X)
 #define ADD($, X, Y) JOIN(RECR_D, $)(INC($), ADD_C, ADD_M, ADD_U, ADD_E, (X, Y))
 
-/* Subtract one INT from another */
+/*! Subtraction */
 #define SUB_C($, X) BOOL(SND(X))
 #define SUB_M($, X) 
 #define SUB_U($, X) (DEC(FST(X)), DEC(SND(X)))
 #define SUB_E($, X) FST(X)
 #define SUB($, X, Y) JOIN(RECR_D, $)(INC($), SUB_C, SUB_M, SUB_U, SUB_E, (X, Y))
 
-/* INT Ordering */
+/*! Ordering */
 #define GT($, X, Y) BOOL(SUB($, X, Y))
 #define LT($, X, Y) BOOL(SUB($, Y, X))
 #define LE($, X, Y) NOT(GT($, X, Y))

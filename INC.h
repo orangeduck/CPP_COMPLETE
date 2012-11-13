@@ -1,7 +1,7 @@
 #ifndef INC_H
 #define INC_H
 
-/* Increment an INT */
+/*! Increment an Integer */
 
 #define INC(X) JOIN(INC_, X)
 #define INC_0 1

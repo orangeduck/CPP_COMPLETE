@@ -32,7 +32,7 @@
  *  #define RTEST($, X) JOIN(RECR_D, $)(INC($), RCOND, RMACRO, RUPDATE, RFINALLY, X)
  *
  *  // Evaluation of above recursive function
- *  RTEST($, 10) => 10 8 6 4 2 
+ *  RTEST($, 10) => 10 8 6 4 2 DONE
  *  ``` 
  *  
  *  Dollar
@@ -47,18 +47,18 @@
  *
  */
  
-/* The Starting Recursion Depth */
+/*! The Starting Recursion Depth */
 #define $0 0
 
-/*
-  Based on the condtional either
-  increments the recursion depth
-  or "kicks" it, creating an undefined symbol
+/*!
+  Based on the condtional, either
+  increments the recursion depth,
+  or "kicks" it, creating an undefined
   symbol and terminating the recursion
 */
 #define KICK(C, $) IF_ELSE(C, INC($), KICKED)
 
-/*
+/*!
   Recursion must "bounce" off this intermediate function.
   This allows for the recursion depth to be incremented 
   properly and the correct function selected next.
@@ -1064,7 +1064,12 @@
 #define RECR_D998($, C, M, U, E, X) JOIN(RECR_A, $)(INC($), C, M, U, E, X)
 #define RECR_D999($, C, M, U, E, X) JOIN(RECR_A, $)(INC($), C, M, U, E, X)
 
-/* The template for a step of a recursive function */
+/*!
+  This is the template upon which all recursion takes place.
+  
+  To get a greater recursion depth extend the above
+  and this list of macros.
+*/
 #define RECR_A0($, C, M, U, E, X)   IF_ELSE( C($, X), M($, X) JOIN(RECR_D, $)(KICK(C($, X), $), C, M, U, E, U($, X)), E($, X) )
 #define RECR_A1($, C, M, U, E, X)   IF_ELSE( C($, X), M($, X) JOIN(RECR_D, $)(KICK(C($, X), $), C, M, U, E, U($, X)), E($, X) )
 #define RECR_A2($, C, M, U, E, X)   IF_ELSE( C($, X), M($, X) JOIN(RECR_D, $)(KICK(C($, X), $), C, M, U, E, U($, X)), E($, X) )

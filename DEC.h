@@ -1,7 +1,7 @@
 #ifndef DEC_H
 #define DEC_H
 
-/* Decrement an INT */
+/*! Decrement an Integer */
 
 #define DEC(X) JOIN(DEC_, X)
 #define DEC_0 0
