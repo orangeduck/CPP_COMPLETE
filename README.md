@@ -4,7 +4,7 @@ BRAINFUCK
 
 A Brainfuck interpreter written in the C preprocessor.
 
-There has been much speculation, but I believe this is the first demonstrative proof that the C preprocessor is turing complete. This uses no GCC extensions and other than the rules for macro evaluation the only "features" it takes advantage of are token pasting and VA_ARG macros.
+There has been much speculation on the turing completeness of the C Preprocessor, but I believe this is the first demonstrative proof that the C preprocessor _is_ turing complete. This uses no GCC extensions and other than the rules for macro evaluation the only "features" it takes advantage of are token pasting and variable argument macros.
 
 Thanks to [pfultz](https://github.com/pfultz2/Cloak/wiki/Is-the-C-preprocessor-Turing-complete%3F) and the many others for their contributions and ideas on recursion in the C preprocessor.
 
@@ -189,4 +189,4 @@ I then used the recursion primative to build many more useful list operations. L
 Library
 -------
 
-All code is avaliable under BSD3 and contributions toward the code as a library are welcome. I mainly built the functionality required for brainfuck but (clearly) many more things are possible. And missing peices are more than welcome.
+All code is avaliable under BSD3 and contributions toward the code as a library are welcome. I mainly built the functionality required for brainfuck but (clearly) many more things are possible and any missing peices are more than welcome.
