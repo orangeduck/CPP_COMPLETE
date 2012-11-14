@@ -37,7 +37,7 @@ Programming in the C Preprocessor is an odd experience. It is like using a purel
 
 __Token Pasting__
 
-Luckily _The Token_ and _Token Pasting_ can be used to make surprisingly flexible and complex things. For example basic boolean logic can be easily implement via the following:
+Luckily _The Token_ and _Token Pasting_ can be used to make surprisingly complex things. For example basic boolean logic can be easily implement via the following:
 
 ```c
 #define AND(X, Y) AND_##Y##_##Z
@@ -47,7 +47,7 @@ Luckily _The Token_ and _Token Pasting_ can be used to make surprisingly flexibl
 #define AND_1_1 1
 ```
 
-Ultimately this should be enough for turing completeness. Using these truth tables one could theoretically make a binary computer much like has been done in systems such Conway's Game of Life or even Minecraft. After encountering a number of issues in my normal approach I seriously considered this approach for a short while, having done a course on computer architecture, and with some experience in control circuits. In the end the number of unforeseen  limitations scared me off - and even having a working 32-bit computer would still be a long way from Brainfuck.
+Ultimately just this should be enough for turing completeness. Using these truth tables one could theoretically make a binary computer much like has been done in systems such Conway's Game of Life or even Minecraft. After encountering a number of issues in my normal approach I seriously considered this approach for a short while, having done a course on computer architecture, and with some experience in control circuits. In the end the number of unforeseen  limitations scared me off - and even having a working 32-bit computer would still be a long way from Brainfuck.
 
 Luckily arithmetic, logic and a whole bunch of other things can also be defined using just recursion and the ordering of the natural numbers.
 
@@ -90,9 +90,9 @@ My initial version of the Brainfuck interpreter exhibited this behavior. As you 
 
 When we talk about turing completeness we usually take liberties over the specification of an "infinite tape". Due to physical limitations no machine can ever have an infinite tape. So we say that if the tape is clearly extendible to the needs of whatever realistic computation is taking place, it is more of less infinite, and the machine is turing complete.
 
-My Brainfuck interpreter was then in an odd position. It would terminate if and only if the tape was finite. By all practicalities it had to be finite, but as soon as it became infinite it would stop working. Of course it also did computation in no sensible way known to man. It first evaluated the tree of all possible computations of a given program, branching and conditionals, and only once this tree was complete to a certain depth would it begin searching that tree for the path actually taken.
+My Brainfuck interpreter was then in an odd position. It would terminate if and only if the tape was finite. By all practicalities it had to be finite - but this was not the definition of turing completeness. Of course it also did computation in no sensible way known to man. It first evaluated the tree of all possible computations of a given program, branching at conditionals, and only once this tree was complete to the maximum stack depth would it begin searching that tree for the path actually taken.
 
-Eventually I did solve this issue, which gave me a basic recursion primitive I could use across the system, but the in between result was certainly interesting.
+Eventually I did solve this issue, which gave me a basic recursion primitive I could use across the system without fear, but the in between result was certainly an interesting machine.
 
 __Recursion__
 
@@ -108,9 +108,9 @@ There are two existing techniques to achieve recursion in the C Preprocessor. Th
 ...
 ```
 
-There are two problems with this approach. The first is that a number of functions must be created as deep as the stack. The second is that the `COND` or `UPDATE` functions must not contain in themselves any reference to the `REPEAT` macro. Even trivial loops such as `while(X != 10) { X+=2; }` cannot be expressed because the update requires addition and the comparison function requires subtraction.
+There are two problems with this approach. The first is that a number of functions must be created as deep as the stack. The second is that the `COND` or `UPDATE` functions must not contain in themselves any reference to the `REPEAT` macro. Even trivial loops such as `while(X != 10) { X += 2; }` cannot be expressed via the above method because `X += 2` requires addition and `X != 10` requires subtraction.
 
-Another method is explained by [pfultz](https://github.com/pfultz2/Cloak/wiki/Is-the-C-preprocessor-Turing-complete%3F) which removes several of these issues. I attempted his implementation but encountered several issues of my own. In general the semantics of this particular behavior of delayed evaluation were too complicated to get my head around.
+Another method is explained by [pfultz](https://github.com/pfultz2/Cloak/wiki/Is-the-C-preprocessor-Turing-complete%3F) which removes several of these issues. I attempted his implementation but encountered several issues of my own. In general the semantics of this particular behavior of delayed evaluation were too complicated to get my head around and unify with the rest of my system.
 
 In the end I implemented a combination of the two. The recursion depth `$` is explicitly passed in to allow for recursive functions to call other recursive functions, and a more general pattern is used to capture all kinds of recursive functions.
 
@@ -149,11 +149,11 @@ The core recursive functions requires two macros to avoid some issues with `JOIN
 ...
 ```
 
-While this still required enumeration two recursive macros the contents are the same, and it does provide general purpose reuse for many types of iteration.
+While this still required enumeration two recursive macros the contents are the same, and it does provide general purpose reuse for many types of iteration. One issue with this recursion is that is only allows manipulation of a single data value `X`. To compute on more than one value then requires a data structure...
 
 __Lists__
 
-The only remaining item was that of data structures. For this I used delayed evaluation and variable argument macros to create a functional list of sorts.
+For lists I used delayed evaluation and variable argument macros to create a functional list of tokens.
 
 ```c
 #define EVAL(...) __VA_ARGS__
@@ -170,7 +170,7 @@ The only remaining item was that of data structures. For this I used delayed eva
 ...
 ```
 
-Lists could then be created and used very easily:
+Lists could then be created using round brackets and updated with the functions I had specified.
 
 ```c
 // 1
@@ -185,12 +185,8 @@ CONS( 5, (1, 2, 3) )
 
 I then used the recursion primative to build many more useful list operations. Lists provided useful for all my data structures including arrays and state-tuples. From this point on programming the Brainfuck interpreter was fairly straight forward.
 
-__The Rest__
-
-For info on the rest feel free to email me or look into the source code.
-
 
 Library
 -------
 
-All code is avaliable under BSD and contributions toward the code as a library are welcome. I mainly built the functionality required for brainfuck but (clearly) many more things are possible. And missing peices are more than welcome.
+All code is avaliable under BSD3 and contributions toward the code as a library are welcome. I mainly built the functionality required for brainfuck but (clearly) many more things are possible. And missing peices are more than welcome.
