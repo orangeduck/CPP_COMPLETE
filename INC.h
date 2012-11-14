@@ -1028,5 +1028,6 @@
 #define INC_1021 1022
 #define INC_1022 1023
 #define INC_1023 1024
+#define INC_1024 1024
 
 #endif

@@ -26,6 +26,6 @@
 #define EAT(...)
 
 /*! Raise error */
-#define ERROR() (ERROR)##(ERROR)
+#define ERROR(X) (ERROR)##(X)
 
 #endif

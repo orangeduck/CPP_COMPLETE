@@ -160,11 +160,16 @@ BF_DATA_DEC($0, (0, 2, (D,U,U,O,D), (3,4,8)) ) // Down
 BF_DATA_INC($0, (1, 2, (D,U,U,O,D), (3,4,8)) ) // Up
 
 BF_UPDATE($0, (0, 0, (F,U,U,B,D), (0,1,7)) ) // Forward
+BF_UPDATE($0, (0, 0, (F,U,B,D,D), (0,1,7)) ) // Forward
 BF_UPDATE($0, (0, 0, (F,D,B,U,U), (1,1,7)) ) // Forward
+BF_UPDATE($0, (0, 0, (F,D,F,D,B,D,B,U,U), (0,1,7)) ) // Forward
+
 BF_UPDATE($0, (3, 0, (F,U,U,B,D), (0,4,8)) ) // Back
 BF_UPDATE($0, (3, 0, (F,U,U,B,D), (1,4,8)) ) // Back
+BF_UPDATE($0, (3, 0, (U,F,U,B,D), (1,4,8)) ) // Back
 BF_UPDATE($0, (4, 0, (R,F,U,U,B,D), (0,4,8)) ) // Back
 BF_UPDATE($0, (4, 0, (R,F,U,U,B,D), (1,4,8)) ) // Back
+BF_UPDATE($0, (6, 0, (R,F,U,F,B,U,B,D), (1,4,8)) ) // Back
 
 BRAINFUCK( () )
 BRAINFUCK( (R,R,L) )

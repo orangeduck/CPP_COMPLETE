@@ -90,19 +90,21 @@
 
 /*! Jump Forward/Back */
 
-// TODO: Make count braces
-#define BF_JUMP_FWD_C($, X) NOT( BF_IS_BACKWARD(NTH($, FST(X), SND(X))) )
-#define BF_JUMP_FWD_M($, X) 
-#define BF_JUMP_FWD_U($, X) ( FST(X), INC(SND(X)) )
-#define BF_JUMP_FWD_E($, X) INC(SND(X))
-#define BF_JUMP_FWD($, X) JOIN(RECR_D, $)(INC($), BF_JUMP_FWD_C, BF_JUMP_FWD_M, BF_JUMP_FWD_U, BF_JUMP_FWD_E, (BF_IA(X), BF_IP(X)) )
+#define BF_JUMP_FWD_UC(X, I) IF_ELSE( BF_IS_FORWARD(I), INC(X), IF_ELSE( BF_IS_BACKWARD(I), DEC(X), X ) )
 
-// TODO: Make count braces
-#define BF_JUMP_BCK_C($, X) NOT( BF_IS_FORWARD(NTH($, FST(X), SND(X))) )
+#define BF_JUMP_FWD_C($, X) BOOL(TRD(X))
+#define BF_JUMP_FWD_M($, X) 
+#define BF_JUMP_FWD_U($, X) ( FST(X), INC(SND(X)), BF_JUMP_FWD_UC(TRD(X), NTH($, FST(X), SND(X))) )
+#define BF_JUMP_FWD_E($, X) SND(X)
+#define BF_JUMP_FWD($, X) JOIN(RECR_D, $)(INC($), BF_JUMP_FWD_C, BF_JUMP_FWD_M, BF_JUMP_FWD_U, BF_JUMP_FWD_E, (BF_IA(X), INC(BF_IP(X)), 1) )
+
+#define BF_JUMP_BCK_UC(X, I) IF_ELSE( BF_IS_FORWARD(I), DEC(X), IF_ELSE( BF_IS_BACKWARD(I), INC(X), X ) )
+
+#define BF_JUMP_BCK_C($, X) BOOL(TRD(X))
 #define BF_JUMP_BCK_M($, X) 
-#define BF_JUMP_BCK_U($, X) ( FST(X), DEC(SND(X)) )
-#define BF_JUMP_BCK_E($, X) INC(SND(X))
-#define BF_JUMP_BCK($, X) JOIN(RECR_D, $)(INC($), BF_JUMP_BCK_C, BF_JUMP_BCK_M, BF_JUMP_BCK_U, BF_JUMP_BCK_E, (BF_IA(X), BF_IP(X)) )
+#define BF_JUMP_BCK_U($, X) ( FST(X), DEC(SND(X)), BF_JUMP_BCK_UC(TRD(X), NTH($, FST(X), SND(X))) )
+#define BF_JUMP_BCK_E($, X) INC(INC(SND(X)))
+#define BF_JUMP_BCK($, X) JOIN(RECR_D, $)(INC($), BF_JUMP_BCK_C, BF_JUMP_BCK_M, BF_JUMP_BCK_U, BF_JUMP_BCK_E, (BF_IA(X), DEC(BF_IP(X)), 1) )
 
 #define BF_JUMP_F($, X) IF_ELSE(NOT(BOOL(BF_DATA($, X))), BF_JUMP_FWD($, X), INC(BF_IP(X)) )
 #define BF_JUMP_B($, X) IF_ELSE(BOOL(BF_DATA($, X)), BF_JUMP_BCK($, X) , INC(BF_IP(X)) )

@@ -2,7 +2,9 @@
 #define TURING_H
 
 /*!
- *  Turing machine in C preprocessor
+ *  WIP Turing machine in C preprocessor
+ *
+ *    !! WARNING THIS IS NOT FUNCTIONAL YET !!
  *  
  *    T - Binary Tape
  *    S - Current State
