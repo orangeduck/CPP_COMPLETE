@@ -25,9 +25,11 @@ Then a program can be compiled as so:
 
 * `cpp MAIN.h -D STDIN=(U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,R,U,U,U,U,U,U,U,U,U,U,R,U,U,U,R,U,L,L,L,L,D,B,R,U,U,O,R,U,O,U,U,U,U,U,U,U,O,O,U,U,U,O,R,U,U,O,L,L,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,O,R,O,U,U,U,O,D,D,D,D,D,D,O,D,D,D,D,D,D,D,D,O,R,U,O)`
 
-Wait for about 30 seconds then the result should appear.
+Wait for about 15 seconds then the result should appear.
 
 * `'H' 'e' 'l' 'l' 'o' ' ' 'W' 'o' 'r' 'l' 'd' '!'`
+
+Currently the maximum recursion depth is set to around `1000` and the data array size around `100`. These can be easily extended but for now, as a general rule of thumb computations exceeding `1000` steps may not run.
 
 
 About
@@ -108,9 +110,9 @@ There are two existing techniques to achieve recursion in the C Preprocessor. Th
 ...
 ```
 
-There are two problems with this approach. The first is that a number of functions must be created as deep as the stack. The second is that the `COND` or `UPDATE` functions must not contain in themselves any reference to the `REPEAT` macro. Even trivial loops such as `while(X != 10) { X += 2; }` cannot be expressed via the above method because `X += 2` requires addition and `X != 10` requires subtraction.
+There are two problems with this approach. The first is that a number of functions must be created as deep as the stack. The second is that the `COND` or `UPDATE` functions must not contain in themselves any reference to the `REPEAT` macro. Even trivial loops such as `while(X != 10) { X += 2; }` cannot be expressed via the above method because `X += 2` requires addition and `X != 10` requires subtraction - both of which may be defined in terms of `REPEAT`.
 
-Another method is explained by [pfultz](https://github.com/pfultz2/Cloak/wiki/Is-the-C-preprocessor-Turing-complete%3F) which removes several of these issues. I attempted his implementation but encountered several issues of my own. In general the semantics of this particular behavior of delayed evaluation were too complicated to get my head around and unify with the rest of my system.
+Another method is explained by [pfultz](https://github.com/pfultz2/Cloak/wiki/Is-the-C-preprocessor-Turing-complete%3F) which removes several of these issues. I attempted his implementation but encountered several issues of my own. In general the semantics of this particular behavior of delayed evaluation were too complicated to get my head around and unify with the rest of my system. It also exhibited the issues with conditionals explained above - but because there was no finite stack depth it tended toward infinite recursion.
 
 In the end I implemented a combination of the two. The recursion depth `$` is explicitly passed in to allow for recursive functions to call other recursive functions, and a more general pattern is used to capture all kinds of recursive functions.
 
@@ -120,7 +122,7 @@ In the end I implemented a combination of the two. The recursion depth `$` is ex
 // M - Side Effect
 // U - Update Function
 // E - Function Upon termination
-// X - value to act on
+// X - value to act upon
 // Usage:
 //
 //  #define RCOND($, X) BOOL(X)
@@ -133,7 +135,7 @@ In the end I implemented a combination of the two. The recursion depth `$` is ex
 //
 ```
 
-The core recursive functions requires two macros to avoid some issues with `JOIN` and also to allow for "kicking" of looped recursion when the conditional fails. This is to stop the unwanted behavior of conditionals explained above.
+The core recursive function requires two macros to avoid some issues with `JOIN` and also to allow for "kicking" of looped recursion when the conditional fails. This is to stop the unwanted behavior of conditionals explained above.
 
 ```c
 
@@ -149,7 +151,9 @@ The core recursive functions requires two macros to avoid some issues with `JOIN
 ...
 ```
 
-While this still required enumeration two recursive macros the contents are the same, and it does provide general purpose reuse for many types of iteration. One issue with this recursion is that is only allows manipulation of a single data value `X`. To compute on more than one value then requires a data structure...
+While this still required enumeration to maximum stack depth, the contents of each expression are the same, and it does provide general purpose reuse for many types of iteration.
+
+But one final problem with this recursion is that is only allows manipulation of a single data value `X`. To compute on more than one value requires a data structure...
 
 __Lists__
 
@@ -183,10 +187,62 @@ TAIL( (3, 1, 99, 12) )
 CONS( 5, (1, 2, 3) )
 ```
 
-I then used the recursion primative to build many more useful list operations. Lists provided useful for all my data structures including arrays and state-tuples. From this point on programming the Brainfuck interpreter was fairly straight forward.
+I then used the recursion primative to build many more useful list operations. Lists provided useful for all my data structures including arrays and state-tuples.
 
+__Brainfuck__
+
+Finally I could put all of the above together to define a program which computed brainfuck. This is a recursion across a brainfuck state specified as `(Instrction Pointer, Data Pointer, Instruction Array, Data Array)`.
+
+Symbols are extracted using the `NTH` item of the instruction array. Then are then pattern matched using `JOIN` against macros which perform the correct behaviour for that instruction. The state is updated correctly and termination conditions are checked. A conditional side effect is performed if the ouput symbol is seen.
+
+More more information see the source code...
+
+
+Turing Machine
+==============
+
+I also have included code for a turing machine. Unfortunately the setup is a little more laborious as state transitions, starting state, and initial tape state must all be defined. This machine currently does not treat all edge cases and will terminate only when the head goes off the right side of the tape. All transitions must be defined. I will be making updates to improve these conditions soon.
+
+The initial starting state is defined using `Q` for example `-D Q=s0`
+The initial tape state is defined using `T`, for example `-D T=(0,0,1,1,0,1,0,0)` 
+
+Transitions are defined using the form `-D T_A_R=(B,W,D)` where:
+
+* `A` - Current State
+* `B` - Next State
+* `R <- {0, 1}` - Binary Tape Read
+* `W <- {0, 1}` - Binary Tape Write
+* `D <- {l, R}` - Tape Head Direction
+
+For example `-D T_s0_0=(s1,1,R)`.
+
+It is important to ensure all valid transitions are defined and also important to ensuring there are no spaces in the tuple - otherwise it will not parse correctly on the command line.
+
+Putting this altogether we can define a machine which alternate writing `0` and `1` to the tape as follows:
+
+* `cpp MAIN_TM.h -D T=(0,0,1,0,1,1,0,0,1) -D Q=s0 -D T_s0_0=(s1,0,R) -D T_s0_1=(s1,0,R) -D T_s1_0=(s0,1,R) -D T_s1_1=(s0,1,R)`
+
+This should output:
+
+* `( (0, 1, 0, 1, 0, 1, 0, 1, 0), s1, 9 )`
+
+Which shows the final tape state, the final machine state and the final tape head position.
+
+
+FizzBuzz
+========
+
+I felt it was time to hop on that bandwagon. Perhaps the simplest example of use.
+
+To compile:
+
+* `cpp MAIN_FZBZ.h`
+
+Should output:
+
+* `1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16 17 Fizz 19 Buzz Fizz 22 23 Fizz Buzz 26 Fizz 28 29 FizzBuzz 31 32 Fizz 34 Buzz Fizz 37 38 Fizz Buzz 41 Fizz 43 44 FizzBuzz 46 47 Fizz 49 Buzz Fizz 52 53 Fizz Buzz 56 Fizz 58 59 FizzBuzz 61 62 Fizz 64 Buzz Fizz 67 68 Fizz Buzz 71 Fizz 73 74 FizzBuzz 76 77 Fizz 79 Buzz Fizz 82 83 Fizz Buzz 86 Fizz 88 89 FizzBuzz 91 92 Fizz 94 Buzz Fizz 97 98 Fizz Buzz`
 
 Library
--------
+=======
 
 All code is avaliable under BSD3 and contributions toward the code as a library are welcome. I mainly built the functionality required for brainfuck but (clearly) many more things are possible and any missing peices are more than welcome.

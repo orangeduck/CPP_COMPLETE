@@ -61,9 +61,8 @@
 #define TM_HEAD_U($, X) IF_ELSE( TM_IS_RIGHT(TRD(TM_TRANS($, X))) , INC(TM_H(X)) , DEC(TM_H(X)) )
 
 #define TURING_RECR_C($, X) NOT(TM_IS_BLANK(TM_READ($, X)))
-#define TURING_RECR_M($, X) [TM_HEAD_U($, X)]
-//#define TURING_RECR_U($, X) ( TM_TAPE_U($, X), TM_STATE_U($, X), TM_HEAD_U($, X) )
-#define TURING_RECR_U($, X) ( TM_T(X), TM_Q(X), TM_HEAD_U($, X) )
+#define TURING_RECR_M($, X)
+#define TURING_RECR_U($, X) ( TM_TAPE_U($, X), TM_STATE_U($, X), TM_HEAD_U($, X) )
 #define TURING_RECR_E($, X) X
 #define TURING_RECR($, T, Q, H) JOIN(RECR_D, $)(INC($), TURING_RECR_C, TURING_RECR_M, TURING_RECR_U, TURING_RECR_E, (T, Q, H))
 

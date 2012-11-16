@@ -13,6 +13,7 @@
 #include "CHAR.h"
 #include "LIST.h"
 
+#include "FIZZBUZZ.h"
 #include "BRAINFUCK.h"
 #include "TURING.h"
 

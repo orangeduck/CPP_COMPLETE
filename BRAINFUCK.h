@@ -128,7 +128,7 @@
 #define BF_RECR($, X) JOIN(RECR_D, $)(INC($), BF_COND, BF_MACRO, BF_UPDATE, BF_FINALLY, X)
 
 /*! Empty Data Array - Extend for more Cells */
-#define BF_DATA_EMPTY() (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+#define BF_DATA_EMPTY() (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
 
 /*! Perform Brainfuck on input I */
 #define BRAINFUCK(I) BF_RECR($0, (0, 0, I, BF_DATA_EMPTY()))

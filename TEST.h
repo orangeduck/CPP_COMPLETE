@@ -28,6 +28,39 @@ ADD($0, 2, 3)
 ADD($0, ADD($0, 2, 3), 2)
 ADD($0, ADD($0, 2, 3), 2)
 
+MUL($0, 5, 2)
+MUL($0, 3, 4)
+MUL($0, 16, 3)
+MUL($0, 7, 8)
+
+DIV($0, 15, 5)
+DIV($0, 15, 4)
+DIV($0, 15, 3)
+DIV($0, 15, 2)
+DIV($0, 15, 1)
+
+MOD($0, 10, 1)
+MOD($0, 10, 2)
+MOD($0, 10, 3)
+MOD($0, 10, 4)
+MOD($0, 10, 5)
+MOD($0, 10, 6)
+MOD($0, 10, 7)
+MOD($0, 10, 8)
+MOD($0, 10, 9)
+MOD($0, 10, 10)
+
+POW($0, 2, 0)
+POW($0, 2, 1)
+POW($0, 2, 2)
+POW($0, 2, 3)
+POW($0, 2, 4)
+POW($0, 2, 5)
+POW($0, 2, 6)
+POW($0, 2, 7)
+POW($0, 2, 8)
+POW($0, 2, 9)
+
 /* logic */
 
 GT($0, 4, 3)
@@ -175,9 +208,9 @@ BRAINFUCK( () )
 BRAINFUCK( (R,R,L) )
 BRAINFUCK( (O,O,R,O) )
 BRAINFUCK( (O,U,O,U,O) )
-BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,U,U,L,D,B,R,O) )
-BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,R,U,U,U,U,L,L,D,B,R,U,O,R,O) )
-BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,R,U,U,U,U,U,U,U,U,U,U,R,U,U,U,R,U,L,L,L,L,D,B,R,U,U,O,R,U,O,U,U,U,U,U,U,U,O,O,U,U,U,O,R,U,U,O,L,L,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,O,R,O,U,U,U,O,D,D,D,D,D,D,O,D,D,D,D,D,D,D,D,O,R,U,O) )
+//BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,U,U,L,D,B,R,O) )
+//BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,R,U,U,U,U,L,L,D,B,R,U,O,R,O) )
+//BRAINFUCK( (U,U,U,U,U,U,U,U,U,U,F,R,U,U,U,U,U,U,U,R,U,U,U,U,U,U,U,U,U,U,R,U,U,U,R,U,L,L,L,L,D,B,R,U,U,O,R,U,O,U,U,U,U,U,U,U,O,O,U,U,U,O,R,U,U,O,L,L,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,O,R,O,U,U,U,O,D,D,D,D,D,D,O,D,D,D,D,D,D,D,D,O,R,U,O) )
 
 /* Turing Machine */
 
