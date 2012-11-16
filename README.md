@@ -70,7 +70,7 @@ Luckily arithmetic, logic and a whole bunch of other things can also be defined 
 #define ADD(X, Y) if Y == 0 then X else ADD(INC(X), DEC(Y))
 ```
 
-It would be nice if the above were how easy it was, but it is just pseudocode. For it to work we have to roll our own conditional expressions and recursion.
+But for the above to work we need some concept of conditionals and recursion, both unsupported in the C Preprocessor. Luckily we can roll our own.
 
 __Conditionals__
 
@@ -195,7 +195,7 @@ Finally I could put all of the above together to define a program which computed
 
 Symbols are extracted using the `NTH` item of the instruction array. Then are then pattern matched using `JOIN` against macros which perform the correct behaviour for that instruction. The state is updated correctly and termination conditions are checked. A conditional side effect is performed if the ouput symbol is seen.
 
-More more information see the source code...
+For more information see the source code...
 
 
 Turing Machine
@@ -204,6 +204,7 @@ Turing Machine
 I also have included code for a turing machine. Unfortunately the setup is a little more laborious as state transitions, starting state, and initial tape state must all be defined. This machine currently does not treat all edge cases and will terminate only when the head goes off the right side of the tape. All transitions must be defined. I will be making updates to improve these conditions soon.
 
 The initial starting state is defined using `Q` for example `-D Q=s0`
+
 The initial tape state is defined using `T`, for example `-D T=(0,0,1,1,0,1,0,0)` 
 
 Transitions are defined using the form `-D T_A_R=(B,W,D)` where:
