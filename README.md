@@ -1,12 +1,14 @@
-
 BRAINFUCK
 =========
 
 A Brainfuck interpreter written in the C preprocessor.
 
-There has been much speculation on the turing completeness of the C Preprocessor, but I believe this is the first demonstrative proof that the C preprocessor _is_ turing complete. This uses no GCC extensions and other than the rules for macro evaluation the only "features" it takes advantage of are token pasting and variable argument macros.
+There has been much speculation on the turing completeness of the C Preprocessor, but I believe ~~this is the first demonstrative proof that the C preprocessor _is_ turing complete~~*. This uses no GCC extensions and other than the rules for macro evaluation the only "features" it takes advantage of are token pasting and variable argument macros.
 
 Thanks to [pfultz](https://github.com/pfultz2/Cloak/wiki/Is-the-C-preprocessor-Turing-complete%3F) and the many others for their contributions and ideas on recursion in the C preprocessor.
+
+* I stand corrected! [Vesa Karvonen](http://chaos-pp.cvs.sourceforge.net/viewvc/chaos-pp/order-pp/), one of the authors of Boost.PP beat me to it by implementing a lisp like dialect in the CPP
+* Another Brainfuck in CPP implementation also exists by [kotha](http://www.kotha.net/bfi/)
 
 Compiling
 ---------
