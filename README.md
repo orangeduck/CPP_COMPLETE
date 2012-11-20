@@ -43,7 +43,7 @@ __Token Pasting__
 Luckily _The Token_ and _Token Pasting_ can be used to make surprisingly complex things. For example basic boolean logic can be easily implement via the following:
 
 ```c
-#define AND(X, Y) AND_##Y##_##Z
+#define AND(X, Y) AND_##X##_##Y
 #define AND_0_0 0
 #define AND_0_1 0
 #define AND_1_0 0
