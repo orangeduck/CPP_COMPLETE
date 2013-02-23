@@ -89,11 +89,7 @@ But unfortunately it has one big downside. That the C preprocessor will fully ev
 
 The reason is that at the point where the recursion should stop, the computation will branch into one state where the recursion has stopped as normal, and one branch where the recursion is still continuing. This continuation branch loops until there is an error or the maximum recursion depth is exceeded.
 
-My initial version of the Brainfuck interpreter exhibited this behavior. As you would expect it was EXTREMELY slow and used HUGE amounts of memory. It could not perform more than a couple of steps, and had an odd paradoxical relationship to turing completeness.
-
-When we talk about turing completeness we usually take liberties over the specification of an "infinite tape". Due to physical limitations no machine can ever have an infinite tape. So we say that if the tape is clearly extendible to the needs of whatever realistic computation is taking place, it is more of less infinite, and the machine is turing complete.
-
-My Brainfuck interpreter was then in an odd position. It would terminate if and only if the tape was finite. By all practicalities it had to be finite - but this was not the definition of turing completeness. Of course it also did computation in no sensible way known to man. It first evaluated the tree of all possible computations of a given program, branching at conditionals, and only once this tree was complete to the maximum stack depth would it begin searching that tree for the path actually taken.
+My initial version of the Brainfuck interpreter exhibited this behavior. As you would expect it was EXTREMELY slow and used HUGE amounts of memory. It could not perform more than a couple of steps.
 
 Eventually I did solve this issue, which gave me a basic recursion primitive I could use across the system without fear, but the in between result was certainly an interesting machine.
 
