@@ -3,11 +3,11 @@ BRAINFUCK
 
 A Brainfuck interpreter written in the C preprocessor.
 
-There has been much speculation on the turing completeness of the C Preprocessor, but I believe ~~this is the first demonstrative proof that the C preprocessor _is_ turing complete~~**. This uses no GCC extensions and other than the rules for macro evaluation the only "features" it takes advantage of are token pasting and variable argument macros.
+There has been much speculation on the turing completeness of the C Preprocessor. Does this act as a demonstrative proof that it is? The short answer - not really. The long answer I discuss [here](http://theorangeduck.com/page/c-preprocessor-turing-complete). This uses no GCC extensions and other than the rules for macro evaluation the only "features" it takes advantage of are token pasting and variable argument macros.
 
 Thanks to [pfultz](https://github.com/pfultz2/Cloak/wiki/Is-the-C-preprocessor-Turing-complete%3F) and the many others for their contributions and ideas on recursion in the C preprocessor.
 
-** I stand corrected! [Vesa Karvonen](http://chaos-pp.cvs.sourceforge.net/viewvc/chaos-pp/order-pp/), one of the authors of Boost.PP beat me to it by implementing a lisp like dialect in the CPP. Another Brainfuck in CPP implementation also exists by [kotha](http://www.kotha.net/bfi/)
+Unfortunately this isn't the first implementation of BF in the preprocessor (though perhaps the second). [Vesa Karvonen](http://chaos-pp.cvs.sourceforge.net/viewvc/chaos-pp/order-pp/), one of the authors of Boost.PP beat me to it by implementing a lisp like dialect in the CPP. Another Brainfuck in CPP implementation also exists by [kotha](http://www.kotha.net/bfi/)
 
 Compiling
 ---------
@@ -50,7 +50,7 @@ Luckily _The Token_ and _Token Pasting_ can be used to make surprisingly complex
 #define AND_1_1 1
 ```
 
-Ultimately just this should be enough for turing completeness. Using these truth tables one could theoretically make a binary computer much like has been done in systems such Conway's Game of Life or even Minecraft. After encountering a number of issues in my normal approach I seriously considered this approach for a short while, having done a course on computer architecture, and with some experience in control circuits. In the end the number of unforeseen  limitations scared me off - and even having a working 32-bit computer would still be a long way from Brainfuck.
+Ultimately just this should be enough for computation. Using these truth tables one could theoretically make a binary computer much like has been done in systems such Conway's Game of Life or even Minecraft. After encountering a number of issues in my normal approach I seriously considered this approach for a short while, having done a course on computer architecture, and with some experience in control circuits. In the end the number of unforeseen  limitations scared me off - and even having a working 32-bit computer would still be a long way from Brainfuck.
 
 Luckily arithmetic, logic and a whole bunch of other things can also be defined using just recursion and the ordering of the natural numbers.
 
