@@ -116,8 +116,8 @@
 #define BF_UPDATE_SYM_U($, X) (INC(BF_IP(X)), BF_DP(X), BF_IA(X), BF_DATA_INC($, X))  /*!< Increment Item at Data Pointer     */
 #define BF_UPDATE_SYM_D($, X) (INC(BF_IP(X)), BF_DP(X), BF_IA(X), BF_DATA_DEC($, X))  /*!< Decrement Item at Data Pointer     */
 #define BF_UPDATE_SYM_O($, X) (INC(BF_IP(X)), BF_DP(X), BF_IA(X), BF_DA(X))           /*!< Do Nothing (Output as side effect) */
-#define BF_UPDATE_SYM_F($, X) (BF_JUMP_F($, X),  BF_DP(X), BF_IA(X), BF_DA(X))        /*!< Condtional Jump Backwards          */
-#define BF_UPDATE_SYM_B($, X) (BF_JUMP_B($, X),  BF_DP(X), BF_IA(X), BF_DA(X))        /*!< Condtional Jump Forwards           */
+#define BF_UPDATE_SYM_F($, X) (BF_JUMP_F($, X), BF_DP(X), BF_IA(X), BF_DA(X))         /*!< Conditional Jump Forwards          */
+#define BF_UPDATE_SYM_B($, X) (BF_JUMP_B($, X), BF_DP(X), BF_IA(X), BF_DA(X))         /*!< Conditional Jump Backwards           */
 #define BF_UPDATE_SYM_($, X)  (INC(BF_IP(X)), BF_DP(X), BF_IA(X), BF_DA(X))           /*!< Do Nothing on empty instruction    */
 
 /*! Main Brainfuck loop */
